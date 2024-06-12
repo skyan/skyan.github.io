@@ -1,8 +1,12 @@
 +++
 title = '并行编程之内存管理(总结)'
 date = 2022-06-14T19:25:10+08:00
-draft = false
+author = "Skyan"
+tags = ["programming", "parallel programming"]
+ShowToc = false
+ShowBreadCrumbs = false
 +++
+
 
 这篇总结并行编程的三种常见的内存管理方法，三种方法如下：
 * Reference Counting：[并行编程之内存管理(一)]({{< ref "parallel-programming-1" >}})

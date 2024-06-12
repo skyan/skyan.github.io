@@ -2,11 +2,64 @@ baseURL: https://skyan.github.io
 languageCode: zh-Hans
 title: Sky's Blog
 theme: ["PaperMod"]
+copyright: "© 2024 [Sky's Blog](https://skyan.github.io)"
+paginate: 10
+
+enableInlineShortcodes: true
+enableRobotsTXT: true
+buildDrafts: false
+buildFuture: false
+buildExpired: false
+enableEmoji: true
+pygmentsUseClasses: true
+mainsections: ["posts", "papermod"]
+
+minify:
+  disableXML: true
+  # minifyOutput: true
+
 params:
+  env: production
   defaultTheme: auto
   disableThemeToggle: true
+
   assets:
     favicon: "/favicon.ico"
     favicon16x16: "/favicon-16x16.png"
     favicon32x32: "/favicon-32x32.png"
     apple_touch_icon: "/apple-touch-icon.png"
+
+  homeInfoParams:
+    Content: >
+      - 一个软件架构师，热爱阅读，观察和思考
+      
+      - A software architect who enjoys reading, observation, and thinking.
+  socialIcons:
+    - name: github
+      title: View Source on Github
+      url: "https://github.com/skyan"
+    - name: rss
+      title: View RSS
+      url: "https://skyan.github.io/index.xml"
+
+outputs:
+  home:
+    - HTML
+    - RSS
+    - JSON # necessary for search
+languages:
+  en:
+    languageName: "English"
+    weight: 1
+    taxonomies:
+      category: categories
+      tag: tags
+      series: series
+    menu:
+      main:
+        - name: Search
+          url: search/
+          weight: 10
+        - name: Tags
+          url: tags/
+          weight: 10

@@ -1,7 +1,10 @@
 +++
 title = '并行编程之内存管理(二)'
 date = 2022-06-08T16:15:19+08:00
-draft = false
+author = "Skyan"
+tags = ["programming", "parallel programming"]
+ShowToc = false
+ShowBreadCrumbs = false
 +++
 
 ## Hazard Pointer

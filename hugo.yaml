@@ -32,9 +32,9 @@ params:
 
   homeInfoParams:
     Content: >
-      - 一个软件架构师，热爱阅读，观察和思考
+      - 一个软件架构师，热爱阅读，观察，思考和行动
       
-      - A software architect who enjoys reading, observation, and thinking.
+      - A software architect who enjoys reading, observing, thinking and doing.
   socialIcons:
     - name: github
       title: View Source on Github

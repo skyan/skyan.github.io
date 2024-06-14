@@ -22,6 +22,7 @@ params:
   env: production
   defaultTheme: auto
   disableThemeToggle: true
+  math: true
 
   assets:
     favicon: "/favicon.ico"
@@ -63,3 +64,19 @@ languages:
         - name: Tags
           url: tags/
           weight: 10
+
+markup:
+  goldmark:
+    footnote: true
+    extensions:
+      passthrough:
+        delimiters:
+          block:
+          - - \[
+            - \]
+          - - $$
+            - $$
+          inline:
+          - - \(
+            - \)
+        enable: true

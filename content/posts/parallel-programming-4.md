@@ -3,8 +3,8 @@ title = '并行编程之内存管理(总结)'
 date = 2022-06-14T19:25:10+08:00
 author = "Skyan"
 tags = ["programming", "parallel programming"]
-ShowToc = false
-ShowBreadCrumbs = false
+ShowToc = true
+ShowBreadCrumbs = true
 +++
 
 

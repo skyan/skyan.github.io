@@ -36,6 +36,9 @@ params:
       
       - A software architect who enjoys reading, observing, thinking and doing.
   socialIcons:
+    - name: email
+      title: Email
+      url: "mailto:skyan83@gmail.com"
     - name: github
       title: View Source on Github
       url: "https://github.com/skyan"

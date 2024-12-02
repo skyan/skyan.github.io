@@ -14,6 +14,10 @@ enableEmoji: true
 pygmentsUseClasses: true
 mainsections: ["posts", "papermod"]
 
+services:
+  googleAnalytics:
+    id: G-NJ6LRQ3S8D
+
 minify:
   disableXML: true
   # minifyOutput: true
@@ -23,6 +27,7 @@ params:
   defaultTheme: auto
   disableThemeToggle: true
   math: true
+
 
   assets:
     favicon: "/favicon.ico"

@@ -17,7 +17,40 @@ ShowBreadCrumbs = true
 
 模型执行一次推理分为两个阶段：
 1. 第一阶段称为prefill，将输入的文本token序列执行一遍前向计算，填充内部每一个transformer层的key-value cache，实现初始化内部KV Cache的目的，准备下一阶段的计算。此时KV Cache缓存在GPU的HBM高速缓存中。
-2. 第二阶段称为decoding，这是一个循环计算，模型使用prefill阶段填充好的KV Cache，预测下一个token，将下一个token加入输入序列的尾部，重新执行一遍前向计算并更新KV Cache，再预测下一个token，再加入输入序列的尾部，如此循环反复，直到遇到结尾token或者最大输出长度限制停止，此时就获得了用于输出的文本序列返回。
+2. 第二阶段称为decoding，这是一个循环计算，模型使用prefill阶段填充好的KV Cache，预测下一个token，将下一个token加入输入序列的尾部，重新执行一遍前向计算并更新KV Cache，再预测下一个token，更新KV Cache，再将新生成的token加入输入序列的尾部，如此循环反复，直到遇到结尾token`<EOS>`或者最大输出长度限制停止，此时将生成的文本序列返回。
+
+整个流程如下图所示：
+
+```mermaid
+graph LR
+    subgraph Prefill Phase
+        A1["'世界'"] --> A2([Iterator 1])
+        A2 --> A3["'人民'"]
+    end
+
+    subgraph Decoding Phase
+        B1([Iteration 2]) --> B2["'大'"]
+        B2 --> B3([Iteration 3])
+        B3 --> B4["'团结'"]
+        B4 --> B5([Iteration 4])
+        B5 --> B6["&lt;EOS&gt;"]
+    end
+
+    subgraph KV Cache
+        KV[KV-Cache]
+    end
+
+    A3 --> B1
+
+    %% KV-Cache as a shared block
+    A2 --> |Update| KV
+    KV -->|Shared| B1
+    B1 --> |Update| KV
+    KV -->|Shared| B3
+    B3 --> |Update| KV
+    KV -->|Shared| B5
+    B5 --> |Update| KV
+```
 
 从上面的推理流程可以看出，prefill阶段和decoding阶段是完全不同的两个阶段。prefill阶段主要是批量计算，由于整个序列可以一次输入计算，并行度更高，所需要的GPU算力也更高，所以属于计算密集型，GPU的算力（FLOPS）越高，运算越快，模型的首token耗时(TTFT)也就越低。
 
@@ -61,6 +94,9 @@ PagedAttention[^7]本质上是借鉴了操作系统的虚拟内存设计思想�
    1. 首先使用逻辑内存块存储KV Cache，
    1. 然后将逻辑内存块映射到非连续的实际GPU内存空间。
 * 通过这种方法，可以有效降低内存碎片，提升使用率。
+
+论文中的图示如下：
+![pagedattention](image.png)
 
 PagedAttention方法当前已经非常成熟，效果显著，已经成为各大主流大模型推理引擎（vLLM，TensorRT-LLM，TGI等）的默认功能。
 

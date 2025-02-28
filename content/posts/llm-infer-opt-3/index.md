@@ -1,6 +1,6 @@
 +++
 title = 'LLM推理优化技术（三）'
-date = 2025-02-19T12:00:00+08:00
+date = 2025-02-20T12:00:00+08:00
 author = "Skyan"
 tags = ["LLM", "inference"]
 ShowToc = true
@@ -84,6 +84,19 @@ MLA(Multi-Head Latent Attention)[^16]是由DeepSeek首先提出，完全国产�
 
 MLA算法还有一个非常tricky的点，就是如何兼容RoPE位置编码，而苏剑林恰好又是RoPE算法的作者，经过他和DeepSeek团队的讨论，最终破解了这一难题，成功落地MLA算法。可以说，MLA算法就是DeepSeek极低成本训练的秘密武器之一，国产之光，值得骄傲和自豪。
 
+### 5.4 结构化输出
+当希望大模型推理的输出格式为指定格式时，推理解码又有一些额外的优化手段。例如，当用户指定大模型输出格式为json，sql等标准格式时，大模型的输出必然需要遵循可以用BNF描述的语法，那么我们在解码token时，可以通过多种优化手段，来进一步提升解码效率。
+
+如果我们需要实现输出文本的格式遵循，最直观的实现方式就是在Decoding完成后，sampling之前，通过语法约束，过滤掉不符合规则的token，比如把这些token的logit概率置为-∞，然后再进行sampling，这样可以避免输出不符合规则的token。但如果针对词表的每个token都进行一次这样的过滤，计算开销很大。因此很多研究集中在如何提升这种筛选的效率。
+
+XGrammar[^17]提出可以将上下文无关的token分离，对于上下文无关的token的掩码全部缓存起来，推理时直接使用。而对于执行栈，则采用树形数据结构最大化复用，节省内存和计算开销。同时通过一种特殊的状态机优化算法，进一步压缩状态数量，节省计算。实现上，还将掩码生成和大模型解码并行化，对CPU-GPU混合运算更加友好。
+
+SGLang[^18]提出了Jump-Forward Decoding方法，这种decoding方法本质上根据输出格式的语法约束，建立了有限状态机，这样当下一个状态为确定token时，直接输出格式要求的token，而无需执行一次昂贵的LLM解码操作，这样极大节省推理性能开销，将计算集中在未确定状态的token输出中。示意图如下所示：
+
+![sglang](image-5.png)
+
+SGLang的Jump-Forward Decoding方法可以和XGrammar进一步结合，实现双赢。在确定性状态下执行Jump-Forward解码，对于不确定状态采用XGrammar掩码，极大提升了结构化解码效率。
+
 
 ## 参考文献
 [^1]: Y. Leviathan, M. Kalman, and Y. Matias, “Fast inference from transformers via speculative decoding,” in International Confer- ence on Machine Learning. PMLR, 2023, pp. 19 274–19 286.
@@ -102,3 +115,5 @@ MLA算法还有一个非常tricky的点，就是如何兼容RoPE位置编码，�
 [^14]: Shazeer N. Fast transformer decoding: One write-head is all you need[J]. arXiv preprint arXiv:1911.02150, 2019.
 [^15]: J. Ainslie, J. Lee-Thorp, M. de Jong, Y. Zemlyanskiy, F. Lebrón, and S. Sanghai. Gqa: Training generalized multi-query transformer models from multi-head checkpoints. arXiv preprint arXiv:2305.13245, 2023.
 [^16]: Liu A, Feng B, Wang B, et al. Deepseek-v2: A strong, economical, and efficient mixture-of-experts language model[J]. arXiv preprint arXiv:2405.04434, 2024.
+[^17]: Dong Y, Ruan C F, Cai Y, et al. Xgrammar: Flexible and efficient structured generation engine for large language models[J]. arXiv preprint arXiv:2411.15100, 2024.
+[^18]: Zheng L, Yin L, Xie Z, et al. Sglang: Efficient execution of structured language model programs[J]. Advances in Neural Information Processing Systems, 2025, 37: 62557-62583.

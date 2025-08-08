@@ -1,4 +1,11 @@
-# AI编程近期的感受
++++
+title = 'AI编程近期的感受'
+date = 2025-08-08T22:25:00+08:00
+author = "Skyan"
+tags = ["AI","AIAgent","LLM"]
+ShowToc = true
+ShowBreadCrumbs = true
++++
 
 最近由于项目事情比较多，我大量使用AI coding来帮助我开发，一周写了近两万行代码，基本上都是采用编程Agent来开发，总体感受就是：**“码农的工作方式，要翻天了”**。
 

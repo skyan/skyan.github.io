@@ -3,7 +3,8 @@ languageCode: zh-Hans
 title: Sky's Blog
 theme: ["PaperMod"]
 copyright: "© 2024 [Sky's Blog](https://skyan.github.io)"
-paginate: 10
+pagination:
+  pagerSize: 10
 
 enableInlineShortcodes: true
 enableRobotsTXT: true

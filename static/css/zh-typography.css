@@ -1,0 +1,143 @@
+/* Chinese-friendly typography and UI refinements */
+
+/* 1) Base font stack for Simplified Chinese with Latin fallbacks */
+html {
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-rendering: optimizeLegibility;
+}
+
+body {
+  font-family: -apple-system, BlinkMacSystemFont, "SF Pro Text", "Segoe UI", Roboto, "Helvetica Neue", Arial,
+    "PingFang SC", "Hiragino Sans GB", "Noto Sans CJK SC", "Source Han Sans SC", "Microsoft YaHei", "WenQuanYi Micro Hei",
+    "Noto Sans", sans-serif;
+  line-height: 1.75; /* slightly taller for Chinese readability */
+  letter-spacing: 0.1px; /* tiny spacing helps mixed CN/EN */
+}
+
+/* 2) Page width and rhythm tweaks (PaperMod compatible) */
+.page,
+.post,
+.single,
+.content,
+.main {
+  max-width: 860px; /* comfortable measure for mixed CN/EN */
+}
+
+/* 3) Headings hierarchy with better CJK proportions */
+h1, h2, h3, h4, h5, h6 {
+  font-family: -apple-system, BlinkMacSystemFont, "SF Pro Display", "PingFang SC", "Hiragino Sans GB",
+    "Noto Sans CJK SC", "Source Han Sans SC", "Segoe UI", Roboto, Arial, sans-serif;
+  line-height: 1.35;
+}
+
+h1 { font-size: 2rem; margin: 1.2em 0 0.6em; }
+h2 { font-size: 1.65rem; margin: 1.1em 0 0.55em; }
+h3 { font-size: 1.35rem; margin: 1em 0 0.5em; }
+h4 { font-size: 1.15rem; margin: 0.9em 0 0.45em; }
+
+/* 4) Paragraph spacing tuned for dense CJK */
+p, ul, ol {
+  margin: 0.8em 0;
+}
+
+/* 5) Better code presentation for CN articles */
+pre, code, kbd, samp {
+  font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+}
+
+pre code {
+  font-size: 0.9rem;
+}
+
+pre {
+  line-height: 1.6;
+  border-radius: 8px;
+}
+
+code {
+  padding: 0.1em 0.35em;
+  border-radius: 4px;
+}
+
+/* 6) Tables with improved readability */
+table {
+  border-collapse: collapse;
+  width: 100%;
+  margin: 1em 0;
+}
+th, td {
+  padding: 0.6em 0.8em;
+}
+thead th {
+  border-bottom: 2px solid rgba(0,0,0,0.06);
+}
+tbody tr + tr {
+  border-top: 1px solid rgba(0,0,0,0.06);
+}
+
+/* 7) Quote style with CN tone */
+blockquote {
+  border-left: 3px solid rgba(0,0,0,0.12);
+  padding: 0.6em 1em;
+  color: rgba(0,0,0,0.75);
+  background: rgba(0,0,0,0.02);
+}
+
+/* 8) Lists: better indentation and spacing for nested CN lists */
+ul ul, ol ol, ul ol, ol ul {
+  margin-top: 0.4em;
+  margin-bottom: 0.4em;
+}
+
+/* 9) Links: subtle underline and hover color */
+a {
+  text-decoration-thickness: 0.08em;
+  text-underline-offset: 2px;
+}
+
+a:hover {
+  text-decoration-thickness: 0.12em;
+}
+
+/* 10) Images: nicer figure captions spacing */
+figure {
+  margin: 1.2em 0;
+}
+figcaption {
+  margin-top: 0.4em;
+  color: rgba(0,0,0,0.6);
+  font-size: 0.95rem;
+}
+
+/* 11) Home info bullets spacing (PaperMod) */
+.home-info ul {
+  margin: 0.6em 0 0 1.25em;
+}
+
+/* 12) KaTeX line-height alignment in mixed CN */
+.katex { line-height: 1.3; }
+
+/* 13) Footnotes readability */
+.footnotes {
+  font-size: 0.95rem;
+  line-height: 1.6;
+}
+.footnotes hr { margin: 1.2em 0; }
+
+/* 14) Search page input (PaperMod) */
+input#search-input {
+  height: 2.4rem;
+  padding: 0 0.8rem;
+  border-radius: 8px;
+}
+
+/* 15) Dark mode tuning for contrasts */
+@media (prefers-color-scheme: dark) {
+  blockquote { color: rgba(255,255,255,0.8); background: rgba(255,255,255,0.04); border-left-color: rgba(255,255,255,0.18); }
+  thead th { border-bottom-color: rgba(255,255,255,0.16); }
+  tbody tr + tr { border-top-color: rgba(255,255,255,0.12); }
+  figcaption { color: rgba(255,255,255,0.75); }
+}
+
+

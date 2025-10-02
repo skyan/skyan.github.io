@@ -2,7 +2,7 @@ baseURL: https://skyan.github.io
 languageCode: zh-Hans
 title: Sky's Blog
 theme: ["PaperMod"]
-copyright: "© 2024 [Sky's Blog](https://skyan.github.io)"
+copyright: "© 2025 [Sky's Blog](https://skyan.github.io)"
 pagination:
   pagerSize: 10
 
